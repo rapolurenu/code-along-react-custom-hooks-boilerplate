@@ -4,18 +4,18 @@ import './App.css';
 const useStorage = (key, initialValue) => {
   const [value, setValue] = useState(() => {
     const storedValue = localStorage.getItem(key) || sessionStorage.getItem(key);
-    return storedValue ? JSON.parse(storedValue) : initialValue;
+    return storedValue !== null ? storedValue : initialValue;
   });
 
   useEffect(() => {
     const storage = localStorage[key] ? localStorage : sessionStorage;
-    storage.setItem(key, JSON.stringify(value));
+    storage.setItem(key, value);
   }, [key, value]);
 
   return [value, setValue];
 };
 
-const MyComponent = () => {
+const Task = () => {
   const [inputValue, setInputValue] = useStorage('inputValue', '');
 
   const handleChange = (event) => {
@@ -29,4 +29,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default Task;
